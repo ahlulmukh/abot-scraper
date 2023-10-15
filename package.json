@@ -1,13 +1,18 @@
 {
   "name": "abot-scraper",
   "version": "1.0.0",
-  "description": "scraper random",
+  "description": "scraper random for downloader and searching",
   "main": "src/index.js",
   "scripts": {
     "test": "npm test"
   },
   "keywords": [
-    "scraper"
+    "scraper",
+    "ytdownloader",
+    "instagram",
+    "youtube-dl",
+    "youtube",
+    "facebook"
   ],
   "author": "Ahlul Mukhramin",
   "license": "ISC",
