@@ -7,7 +7,7 @@ abot-scraper is a library node js. Can get data downloader like facebook, youtub
 Install stable version of scraper:
 
 ```sh
-npm i @ahlulmukh/abot-scraper
+npm i abot-scraper
 ```
 
 Install latest version from github (not recommended)

@@ -5,6 +5,7 @@ const {
   ytMP3,
   ytMP4,
 } = require("./scraper/downloader");
+const { ytPlay } = require("./scraper/search");
 
 module.exports = {
   facebook,
@@ -12,4 +13,5 @@ module.exports = {
   instagram,
   ytMP3,
   ytMP4,
+  ytPlay,
 };
