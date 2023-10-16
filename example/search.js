@@ -1,6 +1,6 @@
-const { ytPlay } = require("../src");
+const { ytPlay, wallpaper } = require("../src");
 
-ytPlay("Abadi Speedup")
+wallpaper("Naruto")
   .then((result) => {
     console.log(result);
   })
