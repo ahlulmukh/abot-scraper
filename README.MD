@@ -20,6 +20,7 @@ npm i github:ahlulmukh/abot-scraper
 
 ```js
 const { ytMP4 } = require("@ahlulmukh/abot-scraper)
+
 ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
   .then((result) => {
     console.log(result); // json;
@@ -31,9 +32,13 @@ ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
 
 ## Features
 
-- Simple and easy to use
-- Many feature scraping
-- You can install the package that you will use
+- Youtube Downloader
+- Facebok Downloader
+- Instagram Downloader
+- Instastory Downloader
+- Pinterest Search
+- Youtube Play By query
+- Wallpaper
 
 ## Contributing
 
