@@ -18,10 +18,26 @@ npm i github:ahlulmukh/abot-scraper
 
 ## Usage
 
-```js
-const { ytMP4 } = require("@ahlulmukh/abot-scraper)
+For Downloader
 
-ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
+```js
+const { Downloader } = require("@ahlulmukh/abot-scraper");
+
+Downloader.ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
+  .then((result) => {
+    console.log(result); // json;
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+For Search
+
+```js
+const { Search } = require("@ahlulmukh/abot-scraper");
+
+Search.ytPlay("Lagu Terbaru")
   .then((result) => {
     console.log(result); // json;
   })
@@ -34,6 +50,7 @@ ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
 
 - Youtube Downloader
 - Facebok Downloader
+- Tiktok Downloader
 - Instagram Downloader
 - Instastory Downloader
 - Pinterest Search
