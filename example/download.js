@@ -12,16 +12,14 @@ const downloader = new Downloader();
 
 // This is example for instagram downloader, you can uncomment this
 
-// downloader
-//   .instagram(
-//     "https://www.instagram.com/reel/CwOMK_ohU85/?utm_source=ig_web_copy_link"
-//   )
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
+downloader
+  .instagram("https://www.instagram.com/p/DG75kWfN6aY/")
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 // This is example for facebook downloader, you can uncomment this
 
@@ -42,14 +40,14 @@ const downloader = new Downloader();
 
 // This is igstory for instagram downloader, you can uncomment this
 
-downloader
-  .igstory("coachjustinl")
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// downloader
+//   .igstory("coachjustinl")
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
 
 // This is ytmp3 for instagram downloader, you can uncomment this
 
