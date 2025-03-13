@@ -1,6 +1,5 @@
 const { default: axios } = require("axios");
 const cheerio = require("cheerio");
-const FormData = require("form-data");
 global.creator = `@abotscraper – ahmuq`;
 
 module.exports = class Downloader {
