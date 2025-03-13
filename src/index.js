@@ -1,12 +1,7 @@
-const { facebook, igstory, ytMP3, ytMP4 } = require("./scraper/downloader");
-const { ytPlay, wallpaper, wikimedia } = require("./scraper/search");
+const Downloader = require("./scraper/downloader");
+const Search = require("./scraper/search");
 
 module.exports = {
-  facebook,
-  igstory,
-  ytMP3,
-  ytMP4,
-  ytPlay,
-  wallpaper,
-  wikimedia,
+  Downloader: new Downloader(),
+  Search: new Search(),
 };
