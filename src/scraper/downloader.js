@@ -146,9 +146,15 @@ module.exports = class Downloader {
           const downloadLinks = data.files
             .map((file) => {
               if (file.__type === "GraphVideo") {
-                return file.video_url;
+                return {
+                  type: "video",
+                  url: file.video_url,
+                };
               } else if (file.__type === "GraphImage") {
-                return file.download_url;
+                return {
+                  type: "image",
+                  url: file.download_url,
+                };
               }
               return null;
             })
