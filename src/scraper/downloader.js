@@ -57,6 +57,44 @@ module.exports = class Downloader {
     });
   };
 
+  tiktokDownloader = (url) => {
+    return new Promise((resolve, reject) => {
+      let headers = {
+        "sec-ch-ua":
+          '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      };
+
+      let config = {
+        id: url,
+        locale: "en",
+        tt: "WmNzZDk_",
+      };
+      axios("https://ssstik.io/abc?url=dl", {
+        method: "POST",
+        data: new URLSearchParams(Object.entries(config)),
+        headers: headers,
+      })
+        .then(({ data }) => {
+          const $ = cheerio.load(data);
+          const title = $("p.maintext").text().trim();
+          const audio = $("a.download_link.music").attr("href");
+          const video = $("a.download_link.without_watermark").attr("href");
+          resolve({
+            creator: global.creator,
+            status: 200,
+            result: {
+              title: title,
+              video: video,
+              audio: audio,
+            },
+          });
+        })
+        .catch(reject);
+    });
+  };
+
   igstory = (username) => {
     return new Promise(async (resolve) => {
       try {

@@ -12,26 +12,33 @@ const downloader = new Downloader();
 
 // This is example for instagram downloader, you can uncomment this
 
-downloader
-  .instagram(
-    "https://www.instagram.com/reel/CwOMK_ohU85/?utm_source=ig_web_copy_link"
-  )
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-// This is example for facebook downloader, you can uncomment this
-
-// facebook("https://www.facebook.com/100004512913170/videos/2122851521195311/")
+// downloader
+//   .instagram(
+//     "https://www.instagram.com/reel/CwOMK_ohU85/?utm_source=ig_web_copy_link"
+//   )
 //   .then((result) => {
 //     console.log(result);
 //   })
 //   .catch((error) => {
 //     console.error(error);
 //   });
+
+// This is example for facebook downloader, you can uncomment this
+
+// downloader
+//   .facebook("https://www.facebook.com/100004512913170/videos/2122851521195311/")
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
+
+downloader
+  .tiktokDownloader("https://vt.tiktok.com/ZSMGBCeuT/")
+  .then((result) => {
+    console.log(result);
+  });
 
 // This is igstory for instagram downloader, you can uncomment this
 
