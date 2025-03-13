@@ -82,41 +82,41 @@ module.exports = class Downloader {
   };
 
   igstory = (username) => {
+    function encodeParameter(username) {
+      const parameter = `-1::${username}::rJP2tBRKf6ktbRqPUBtRE9klgBWb7d`;
+      let encoded = Buffer.from(parameter).toString("base64");
+      encoded = encoded
+        .replace(/[+]/g, ".")
+        .replace(/[/]/g, "_")
+        .replace(/[=]/g, "-");
+
+      return encoded;
+    }
     return new Promise(async (resolve) => {
+      const headers = {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/",
+      };
       try {
-        const data = await axios.get(
-          "https://insta-stories-viewer.com/" + username
-        );
-        const userIdRegex = /var USER_ID = (\d+);/;
-        const match = data.data.match(userIdRegex);
-        const userId = parseInt(match[1]);
-        const hasil = await axios.get(
-          "https://igs.sf-converter.com/api/stories/" + userId
-        );
-        const result = [];
-        hasil.data.result.forEach((item, index) => {
-          const imageUrl =
-            item.image_versions2 &&
-            item.image_versions2.candidates &&
-            item.image_versions2.candidates.length > 0
-              ? item.image_versions2.candidates[0].url
-              : null;
-          const videoUrl =
-            item.video_versions && item.video_versions.length > 0
-              ? item.video_versions[0].url
-              : null;
-          result.push(imageUrl);
-          if (videoUrl) {
-            result.push(videoUrl);
+        const encodedParameter = encodeParameter(username);
+        const storyData = await axios(
+          `https://instanavigation.net/api/v1/stories/${encodedParameter}`,
+          {
+            method: "GET",
+            headers: headers,
           }
-          resolve({
-            creator: global.creator,
-            status: 200,
-            result: result,
-          });
+        );
+        const data = storyData.data;
+        const sources = data.stories.map((story) => story.source);
+        return resolve({
+          creator: global.creator,
+          status: 200,
+          result: {
+            user_info: data.user_info,
+            links: sources,
+          },
         });
       } catch (error) {
-        console.log(error);
         return resolve({
           creator: global.creator,
           status: false,

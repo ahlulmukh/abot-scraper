@@ -21,9 +21,10 @@ npm i github:ahlulmukh/abot-scraper
 For Downloader
 
 ```js
-const { Downloader } = require("@ahlulmukh/abot-scraper");
+const { downloader } = require("@ahlulmukh/abot-scraper");
 
-Downloader.ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
+downloader
+  .ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
   .then((result) => {
     console.log(result); // json;
   })
@@ -35,9 +36,10 @@ Downloader.ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
 For Search
 
 ```js
-const { Search } = require("@ahlulmukh/abot-scraper");
+const { search } = require("@ahlulmukh/abot-scraper");
 
-Search.ytPlay("Lagu Terbaru")
+search
+  .ytPlay("Lagu Terbaru")
   .then((result) => {
     console.log(result); // json;
   })
