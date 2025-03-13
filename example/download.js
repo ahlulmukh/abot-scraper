@@ -25,20 +25,20 @@ const downloader = new Downloader();
 
 // This is example for facebook downloader, you can uncomment this
 
-// downloader
-//   .facebook("https://www.facebook.com/100004512913170/videos/2122851521195311/")
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-
 downloader
-  .tiktokDownloader("https://vt.tiktok.com/ZSMGBCeuT/")
+  .facebook("https://www.facebook.com/100004512913170/videos/2122851521195311/")
   .then((result) => {
     console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
   });
+
+// downloader
+//   .tiktokDownloader("https://vt.tiktok.com/ZSMGBCeuT/")
+//   .then((result) => {
+//     console.log(result);
+//   });
 
 // This is igstory for instagram downloader, you can uncomment this
 

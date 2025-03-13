@@ -1,55 +1,41 @@
 const { default: axios } = require("axios");
 const cheerio = require("cheerio");
+const FormData = require("form-data");
 global.creator = `@abotscraper – ahmuq`;
 
 module.exports = class Downloader {
   facebook = (url) => {
     return new Promise((resolve, reject) => {
-      let config = {
-        url: url,
-      };
       let headerss = {
-        "sec-ch-ua":
-          '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
-        "user-agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        Cookie:
-          'PHPSESSID=6jo2ggb63g5mjvgj45f612ogt7; _ga=GA1.2.405896420.1625200423; _gid=GA1.2.2135261581.1625200423; _PN_SBSCRBR_FALLBACK_DENIED=1625200785624; MarketGidStorage={"0":{},"C702514":{"page":5,"time":1625200846733}}',
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0",
+        Origin: "https://www.fdown.world",
+        referer: "https://www.fdown.world/",
+        "x-requested-with": "XMLHttpRequest",
+        Cookie: "codehap_domain=www.fdown.world",
       };
-      axios("https://www.getfvid.com/downloader", {
+
+      const data = {
+        codehap_link: url,
+        codehap: "true",
+      };
+
+      axios("https://www.fdown.world/result.php", {
         method: "POST",
-        data: new URLSearchParams(Object.entries(config)),
+        data: new URLSearchParams(Object.entries(data)),
         headers: headerss,
       })
         .then(({ data }) => {
           const $ = cheerio.load(data);
-          const title = $(".card-title a").text().trim();
-          const links = {
-            hd: "",
-            sd: "",
-            audio: "",
-          };
-
-          $(".btns-download a").each((index, element) => {
-            const link = $(element).attr("href");
-            const text = $(element).text();
-            if (text.includes("HD Quality")) {
-              links.hd = link;
-            } else if (text.includes("Normal Quality")) {
-              links.sd = link;
-            } else if (text.includes("Audio Only")) {
-              links.audio = link;
-            }
-          });
+          const videoUrl = $("video source").attr("src");
+          const imageUrl = $("img").attr("src");
 
           resolve({
             creator: global.creator,
             status: 200,
             result: {
-              title: title,
-              hd: links.hd,
-              sd: links.sd,
-              audio: links.audio,
+              thumbnail: imageUrl,
+              videoUrl: videoUrl,
             },
           });
         })
