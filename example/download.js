@@ -1,24 +1,27 @@
-const { igstory, facebook, instagram, ytMP3, ytMP4 } = require("../src");
+const Downloader = require("../src/scraper/downloader");
+const downloader = new Downloader();
 
-ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-// This is example for instagram downloader, you can uncomment this
-
-// instagram(
-//   "https://www.instagram.com/reel/CwOMK_ohU85/?utm_source=ig_web_copy_link"
-// )
+// downloader
+//   .ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
 //   .then((result) => {
 //     console.log(result);
 //   })
 //   .catch((error) => {
 //     console.error(error);
 //   });
+
+// This is example for instagram downloader, you can uncomment this
+
+downloader
+  .instagram(
+    "https://www.instagram.com/reel/CwOMK_ohU85/?utm_source=ig_web_copy_link"
+  )
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 // This is example for facebook downloader, you can uncomment this
 
