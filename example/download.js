@@ -23,14 +23,14 @@ const downloader = new Downloader();
 
 // This is example for facebook downloader, you can uncomment this
 
-// downloader
-//   .facebook("https://www.facebook.com/100004512913170/videos/2122851521195311/")
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
+downloader
+  .facebook("https://www.facebook.com/100004512913170/videos/2122851521195311/")
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 // downloader
 //   .tiktokDownloader("https://vt.tiktok.com/ZSMGBCeuT/")
@@ -49,11 +49,11 @@ const downloader = new Downloader();
 //     console.log(error);
 //   });
 
-downloader
-  .youtubeDownloader("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// downloader
+//   .youtubeDownloader("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
