@@ -12,25 +12,25 @@ const downloader = new Downloader();
 
 // This is example for instagram downloader, you can uncomment this
 
-// downloader
-//   .instagram("https://www.instagram.com/p/DG75kWfN6aY/")
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-
-// This is example for facebook downloader, you can uncomment this
-
 downloader
-  .facebook("https://www.facebook.com/100004512913170/videos/2122851521195311/")
+  .instagram("https://www.instagram.com/p/DG75kWfN6aY/")
   .then((result) => {
     console.log(result);
   })
   .catch((error) => {
     console.error(error);
   });
+
+// This is example for facebook downloader, you can uncomment this
+
+// downloader
+//   .facebook("https://www.facebook.com/share/p/1EGJVLUrQ9/")
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 
 // downloader
 //   .tiktokDownloader("https://vt.tiktok.com/ZSMGBCeuT/")
@@ -50,7 +50,9 @@ downloader
 //   });
 
 // downloader
-//   .youtubeDownloader("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
+//   .youtubeDownloader(
+//     "https://www.youtube.com/watch?v=l08Zw-RY__Q&list=RDl08Zw-RY__Q&start_radio=1"
+//   )
 //   .then((result) => {
 //     console.log(result);
 //   })
