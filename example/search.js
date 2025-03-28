@@ -1,8 +1,19 @@
-const { ytPlay, wallpaper } = require("../src");
+const Search = require("../src/scraper/search");
+const search = new Search();
 
-wallpaper("Anime")
+// search
+//   .wallpaper("Anime")
+//   .then((result) => {
+//     console.log(result.hasil);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
+
+search
+  .sfileSearch("anime", 1)
   .then((result) => {
-    console.log(result.hasil);
+    console.log(result);
   })
   .catch((error) => {
     console.log(error);

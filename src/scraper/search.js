@@ -3,6 +3,37 @@ const cheerio = require("cheerio");
 global.creator = `@abotscraper – ahmuq`;
 
 module.exports = class Search {
+  async sfileSearch(query, page = 1) {
+    try {
+      const response = await axios.get(
+        `https://sfile.mobi/search.php?q=${query}&page=${page}`,
+        {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            Referer: "https://sfile.mobi/",
+            "Accept-Language": "en-US,en;q=0.9",
+          },
+        }
+      );
+      const $ = cheerio.load(response.data);
+      const results = [];
+      $("div.list").each(function () {
+        let title = $(this).find("a").text();
+        let size = $(this).text().trim().split("(")[1];
+        let link = $(this).find("a").attr("href");
+        if (link) results.push({ title, size: size.replace(")", ""), link });
+      });
+      return {
+        creator: global.creator,
+        status: true,
+        result: results,
+      };
+    } catch (error) {
+      return { creator: global.creator, status: false, msg: error.message };
+    }
+  }
+
   ytPlay = (text) => {
     return new Promise((resolve, reject) => {
       let configd = {
