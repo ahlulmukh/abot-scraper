@@ -212,4 +212,31 @@ module.exports = class Downloader {
       return { creator: global.creator, status: false, msg: error.message };
     }
   }
+
+  async sfileDownloader(url) {
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+          Referer: "https://sfile.mobi/",
+          "Accept-Language": "en-US,en;q=0.9",
+        },
+      });
+      const $ = cheerio.load(response.data);
+      let filename = $(".intro-container img").attr("alt");
+      let mimetype = $("div.list").text().split(" - ")[1].split("\n")[0];
+      let download =
+        $("#download").attr("href") +
+        "&k=" +
+        Math.floor(Math.random() * (15 - 10 + 1) + 10);
+      return {
+        creator: global.creator,
+        status: true,
+        result: { filename, mimetype, download },
+      };
+    } catch (error) {
+      return { creator: global.creator, status: false, msg: error.message };
+    }
+  }
 };

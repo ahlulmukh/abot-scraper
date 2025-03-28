@@ -66,6 +66,7 @@ search
 - **YouTube Play by Query**: Search and play YouTube content.
 - **Wallpaper Search**: Find wallpapers.
 - **SFile Search**: Find file in sfile.
+- **SFile Downloader**: Download file from sfile.
 
 ## Contributing
 

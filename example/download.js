@@ -12,8 +12,17 @@ const downloader = new Downloader();
 
 // This is example for instagram downloader, you can uncomment this
 
+// downloader
+//   .instagram("https://www.instagram.com/p/DG75kWfN6aY/")
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
+
 downloader
-  .instagram("https://www.instagram.com/p/DG75kWfN6aY/")
+  .sfileDownloader("https://sfile.mobi/3mguer3AQoJ")
   .then((result) => {
     console.log(result);
   })
