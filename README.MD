@@ -67,4 +67,4 @@ We welcome contributions from the community. If you'd like to contribute, please
 
 ## License
 
-Scraper is licensed under the GPL-3.0-or-later license. See [LICENSE](LICENSE) for more information.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for more details.
