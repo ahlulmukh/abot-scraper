@@ -65,6 +65,7 @@ search
 - **Pinterest Search**: Search for Pinterest content.
 - **YouTube Play by Query**: Search and play YouTube content.
 - **Wallpaper Search**: Find wallpapers.
+- **SFile Search**: Find file in sfile.
 
 ## Contributing
 
