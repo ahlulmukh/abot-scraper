@@ -1,1 +1,55 @@
-example
+# Source files (only ship built dist)
+src/
+
+# Development files
+scripts/
+example/
+CONVERSION-SUMMARY.md
+DEVELOPMENT.md
+FINAL-SUMMARY.md
+STATUS.md
+
+# Testing files
+test/
+tests/
+*.test.js
+*.spec.js
+testing.js
+test-*.js
+test-*.mjs
+test-*.cjs
+debug-*.js
+
+# Development dependencies
+.gitignore
+.eslintrc*
+.prettierrc*
+tsconfig.json
+jest.config.*
+babel.config.*
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and debugging
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Cache
+.cache/
+node_modules/.cache/
+
+# Environment
+.env*

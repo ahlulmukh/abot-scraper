@@ -1,6 +1,14 @@
 # abot-scraper
 
-`abot-scraper` is a Node.js library designed to simplify downloading and searching for content from popular platforms like YouTube, Facebook, Instagram, and more.
+A versatile scraper package for downloading and searching content from various social media platforms.
+
+## Features
+
+- ✅ **Dual Package Support**: Works with both CommonJS (`require`) and ES Modules (`import`)
+- 🚀 **Built with Bun**: Optimized build process using Bun.js
+- 📱 **Multi-platform**: Supports Facebook, Instagram, TikTok, YouTube, and SFile
+- 🔍 **Search functionality**: Search content across supported platforms
+- 📝 **TypeScript Support**: Full TypeScript declarations included
 
 ## Installation
 
@@ -8,65 +16,189 @@
 
 Install the latest stable version from npm:
 
-```sh
+```bash
 npm install abot-scraper
+# or
+yarn add abot-scraper
+# or
+bun add abot-scraper
 ```
 
 ### Development Version
 
 Install the latest development version directly from GitHub (not recommended for production):
 
-```sh
+```bash
 npm install github:ahlulmukh/abot-scraper
 ```
 
 ## Usage
 
-### Downloader Example
+### CommonJS (Node.js with require)
 
-Download videos from YouTube:
+```javascript
+// Default import
+const abot = require("abot-scraper");
 
-```js
-const { downloader } = require("@ahlulmukh/abot-scraper");
+// Use the pre-instantiated classes
+const result = await abot.downloader.facebook("https://facebook.com/video/123");
+const searchResult = await abot.search.sfileSearch("query", 1);
 
+// Or import classes directly
+const { Downloader, Search } = require("abot-scraper");
+const downloader = new Downloader();
+const search = new Search();
+```
+
+### ES Modules (modern JavaScript/TypeScript)
+
+```javascript
+// Default import
+import abot from "abot-scraper";
+
+// Use the pre-instantiated classes
+const result = await abot.downloader.facebook("https://facebook.com/video/123");
+const searchResult = await abot.search.sfileSearch("query", 1);
+
+// Or import classes directly
+import { Downloader, Search } from "abot-scraper";
+const downloader = new Downloader();
+const search = new Search();
+```
+
+### TypeScript
+
+TypeScript declarations are included, providing full type safety and IntelliSense support:
+
+```typescript
+import abot, {
+  Downloader,
+  Search,
+  type ApiResponse,
+  type FacebookResult,
+} from "abot-scraper";
+
+// TypeScript will provide full type checking and autocomplete
+const result: ApiResponse<FacebookResult> = await abot.downloader.facebook(
+  "https://facebook.com/video/123"
+);
+
+// Types are automatically inferred
+const downloader = new Downloader();
+const fbResult = await downloader.facebook("https://example.com"); // Return type is known
+```
+
+## API Reference
+
+### Downloader Class
+
+The `Downloader` class provides methods to download content from various platforms.
+
+#### Available Methods
+
+- `facebook(url)` - Download Facebook videos
+- `tiktokDownloader(url)` - Download TikTok videos
+- `instagram(url)` - Download Instagram posts/stories
+- `igstory(username)` - Get Instagram stories for a user
+- `youtubeDownloader(url)` - Download YouTube videos with multiple formats
+- `sfileDownloader(url)` - Download files from SFile
+
+#### Example Usage
+
+```javascript
+// CommonJS
+const { downloader } = require("abot-scraper");
+
+// ES Modules
+import { downloader } from "abot-scraper";
+
+// Download YouTube video
+const result = await downloader.youtubeDownloader(
+  "https://youtu.be/j_MlBCb9-m8"
+);
+console.log(result);
+
+// Download TikTok video
+const tiktokResult = await downloader.tiktokDownloader(
+  "https://tiktok.com/@user/video/123"
+);
+console.log(tiktokResult);
+
+// Download Facebook video
+const fbResult = await downloader.facebook("https://facebook.com/video/123");
+console.log(fbResult);
+
+// Get Instagram stories
+const storiesResult = await downloader.igstory("username");
+console.log(storiesResult);
+```
+
+### Search Class
+
+The `Search` class provides methods to search for content across various platforms.
+
+#### Available Methods
+
+- `ytPlay(query)` - Search YouTube videos by query
+- `wallpaper(query, page)` - Search for wallpapers
+- `wikimedia(query)` - Search Wikimedia content
+- `sfileSearch(query, page)` - Search SFile for files
+
+#### Example Usage
+
+```javascript
+// CommonJS
+const { search } = require("abot-scraper");
+
+// ES Modules
+import { search } from "abot-scraper";
+
+// Search YouTube videos
+const ytResults = await search.ytPlay("music video");
+console.log(ytResults);
+
+// Search wallpapers
+const wallpapers = await search.wallpaper("abstract art", "1");
+console.log(wallpapers);
+
+// Search Wikimedia
+const wikimediaResults = await search.wikimedia("nature photos");
+console.log(wikimediaResults);
+```
+
+### Error Handling
+
+All methods return promises and should be wrapped in try-catch blocks or use `.catch()` for proper error handling:
+
+```javascript
+try {
+  const result = await downloader.youtubeDownloader(
+    "https://youtu.be/invalid-url"
+  );
+  console.log(result);
+} catch (error) {
+  console.error("Download failed:", error.message);
+}
+
+// Or using .catch()
 downloader
-  .ytMP4("https://youtu.be/j_MlBCb9-m8?si=g6KsGM6cHNotU-rH")
-  .then((result) => {
-    console.log(result); // JSON response
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+  .facebook("https://facebook.com/video/123")
+  .then((result) => console.log(result))
+  .catch((error) => console.error("Error:", error));
 ```
 
-### Search Example
+## Requirements
 
-Search for YouTube content by query:
+- **Node.js**: Version 16.0.0 or higher
+- **Internet connection**: Required for scraping online content
 
-```js
-const { search } = require("@ahlulmukh/abot-scraper");
+## Package Information
 
-search
-  .ytPlay("Lagu Terbaru")
-  .then((result) => {
-    console.log(result); // JSON response
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-```
-
-## Features
-
-- **YouTube Downloader**: Download videos in various formats.
-- **Facebook Downloader**: Fetch videos from Facebook.
-- **TikTok Downloader**: Download TikTok videos.
-- **Instagram Downloader**: Download Instagram posts and stories.
-- **Pinterest Search**: Search for Pinterest content.
-- **YouTube Play by Query**: Search and play YouTube content.
-- **Wallpaper Search**: Find wallpapers.
-- **SFile Search**: Find file in sfile.
-- **SFile Downloader**: Download file from sfile.
+- **Package Type**: Dual (CommonJS + ES Modules)
+- **Build Tool**: Bun.js
+- **Source Format**: ES Modules
+- **Distribution**: Both CommonJS and ESM builds included
+- **TypeScript**: Full type declarations provided
 
 ## Contributing
 

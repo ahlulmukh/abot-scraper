@@ -2,17 +2,46 @@
   "name": "abot-scraper",
   "version": "1.1.3",
   "description": "scraper random for downloader and searching",
-  "main": "src/index.js",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./types/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
-    "test": "npm test"
+    "build": "bun run build:clean && bun run build:esm && bun run build:cjs",
+    "build:clean": "bun run scripts/clean.js",
+    "build:esm": "bun run scripts/build-esm.js",
+    "build:cjs": "bun run scripts/build-cjs.js",
+    "prepublishOnly": "bun run build"
   },
   "keywords": [
     "scraper",
+    "downloader",
     "ytdownloader",
     "instagram",
     "youtube-dl",
     "youtube",
-    "facebook"
+    "facebook",
+    "tiktok",
+    "social-media",
+    "video-downloader",
+    "dual-package",
+    "esm",
+    "commonjs",
+    "typescript"
   ],
   "author": "Ahlul Mukhramin",
   "license": "MIT",
@@ -20,5 +49,9 @@
     "axios": "^1.5.1",
     "cheerio": "^1.0.0-rc.12",
     "qs": "^6.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.27",
+    "typescript": "^5.8.3"
   }
 }
