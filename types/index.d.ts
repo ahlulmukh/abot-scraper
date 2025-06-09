@@ -78,6 +78,56 @@ export interface WikimediaItem {
     image: string;
 }
 
+export interface SfileSearchResult {
+    title: string;
+    size: string;
+    link: string;
+}
+
+export interface YtPlayResult {
+    status: string;
+    title: string;
+    ftype: string;
+    thumb: string;
+    size_mp3: string;
+    link: string;
+}
+
+export interface WallpaperResult {
+    title: string;
+    type: string;
+    source: string;
+    image: string[];
+}
+
+export interface WikimediaResult {
+    title: string;
+    source: string;
+    image: string;
+}
+
+export interface YoutubeResult {
+    title: string;
+    thumbnail: string;
+    downloadLinks: Record<string, string>;
+    mp3DownloadUrl: string;
+}
+
+export interface YoutubeResultV2 {
+    title: string;
+    thumbnail: string | null;
+    downloadLinks: Record<string, string>;
+    video: string | null;
+    audio: string | null;
+    formats: any[];
+}
+
+export interface SfileDownloadResult {
+    filename: string;
+    mimetype: string;
+    download: string;
+}
+
 export declare class Downloader {
     facebook(url: string): Promise<ApiResponse<FacebookResult>>;
 
