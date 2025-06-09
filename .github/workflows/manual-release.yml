@@ -66,7 +66,7 @@ jobs:
           echo "New version: $NEW_VERSION"
 
           # Commit version bump
-          git add package.json package-lock.json
+          git add package.json
           git commit -m "chore: bump version to $NEW_VERSION"
 
           # Create and push tag
