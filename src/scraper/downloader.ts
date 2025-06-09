@@ -93,6 +93,10 @@ export default class Downloader {
             const videoUrl = $('video source').attr('src');
             const imageUrl = $('img').attr('src');
 
+            if (!videoUrl && !imageUrl) {
+                throw new Error('No video or image found in the response.');
+            }
+
             return {
                 creator: global.creator,
                 status: 200,
@@ -137,6 +141,10 @@ export default class Downloader {
             const title = $('p.maintext').text().trim();
             const audio = $('a.download_link.music').attr('href');
             const video = $('a.download_link.without_watermark').attr('href');
+
+            if (!title || !video) {
+                throw new Error('Failed to extract video or title from response.');
+            }
 
             return {
                 creator: global.creator,
