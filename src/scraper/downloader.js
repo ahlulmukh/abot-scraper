@@ -4,6 +4,9 @@ import qs from "qs";
 global.creator = `@abotscraper – ahmuq`;
 
 export default class Downloader {
+  constructor() {
+    this.generator = new (require("../utils/generator.js").default)();
+  }
   async facebook(url) {
     try {
       const headers = {
@@ -206,6 +209,72 @@ export default class Downloader {
           thumbnail: thumbnailUrl,
           downloadLinks: downloadLinks,
           mp3DownloadUrl: `https://api.fabdl.com${mp3Response.data.result.download_url}`,
+        },
+      };
+    } catch (error) {
+      return { creator: global.creator, status: false, msg: error.message };
+    }
+  }
+
+  async youtubeDownloaderV2(url) {
+    try {
+      const timestamp = this.generator.generateTimeStampYoutubeDL();
+      const footer = this.generator.generateFooterYoutubeDL(timestamp, url);
+
+      const payload = {
+        link: url,
+      };
+
+      const headers = {
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "g-footer": footer,
+        "g-timestamp": timestamp,
+        accept: "*/*",
+        "accept-language": "en",
+        "content-type": "application/json",
+        priority: "u=1, i",
+        "sec-ch-ua":
+          '"Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        Referer: "https://snapany.com/",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+      };
+      const response = await axios.post(
+        "https://api.snapany.com/v1/extract",
+        payload,
+        { headers }
+      );
+      const data = response.data;
+
+      const videoMedia = data.medias.find(
+        (media) => media.media_type === "video"
+      );
+      const audioMedia = data.medias.find(
+        (media) => media.media_type === "audio"
+      );
+      const downloadLinks = {};
+      if (videoMedia && videoMedia.formats) {
+        videoMedia.formats.forEach((format) => {
+          const qualityKey = `${format.quality}p`;
+          downloadLinks[qualityKey] = format.video_url;
+        });
+      }
+
+      return {
+        creator: global.creator,
+        status: true,
+        result: {
+          title: data.text,
+          thumbnail: videoMedia ? videoMedia.preview_url : null,
+          downloadLinks: downloadLinks,
+          video: videoMedia ? videoMedia.resource_url : null,
+          audio: audioMedia ? audioMedia.resource_url : null,
+          formats: videoMedia ? videoMedia.formats : [],
         },
       };
     } catch (error) {
