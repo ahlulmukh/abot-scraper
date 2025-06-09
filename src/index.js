@@ -1,7 +1,12 @@
-const Downloader = require("./scraper/downloader");
-const Search = require("./scraper/search");
+import Downloader from "./scraper/downloader.js";
+import Search from "./scraper/search.js";
 
-module.exports = {
-  downloader: new Downloader(),
-  search: new Search(),
+const downloader = new Downloader();
+const search = new Search();
+
+export default {
+  downloader,
+  search,
 };
+
+export { Downloader, downloader, Search, search };

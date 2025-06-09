@@ -1,8 +1,8 @@
-const { default: axios } = require("axios");
-const cheerio = require("cheerio");
+import axios from "axios";
+import * as cheerio from "cheerio";
 global.creator = `@abotscraper – ahmuq`;
 
-module.exports = class Search {
+export default class Search {
   async sfileSearch(query, page = 1) {
     try {
       const response = await axios.get(
@@ -172,4 +172,4 @@ module.exports = class Search {
         .catch(reject);
     });
   };
-};
+}

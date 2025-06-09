@@ -1,9 +1,9 @@
-const { default: axios } = require("axios");
-const cheerio = require("cheerio");
-const qs = require("qs");
+import axios from "axios";
+import * as cheerio from "cheerio";
+import qs from "qs";
 global.creator = `@abotscraper – ahmuq`;
 
-module.exports = class Downloader {
+export default class Downloader {
   async facebook(url) {
     try {
       const headers = {
@@ -239,4 +239,4 @@ module.exports = class Downloader {
       return { creator: global.creator, status: false, msg: error.message };
     }
   }
-};
+}
