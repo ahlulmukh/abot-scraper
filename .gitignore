@@ -59,3 +59,6 @@ pids
 # Logs
 logs
 *.log
+
+PUBLISHING.MD 
+RELEASE-SETUP.MD
