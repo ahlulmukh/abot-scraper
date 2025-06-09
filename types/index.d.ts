@@ -1,4 +1,4 @@
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
     creator: string;
     status: number | boolean;
     result?: T;
@@ -18,7 +18,7 @@ export interface TikTokResult {
 
 export interface InstagramUserInfo {
     username: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 export interface InstagramStoriesResult {
@@ -125,7 +125,7 @@ export interface YoutubeResultV2 {
     downloadLinks: Record<string, string>;
     video: string | null;
     audio: string | null;
-    formats: any[];
+    formats: unknown[];
 }
 
 export interface SfileDownloadResult {
