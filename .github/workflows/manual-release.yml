@@ -27,6 +27,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -71,6 +72,7 @@ jobs:
 
           # Create and push tag
           git tag "v$NEW_VERSION"
+          git push origin main
           git push origin main --tags
 
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
