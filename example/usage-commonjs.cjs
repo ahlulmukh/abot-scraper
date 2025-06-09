@@ -1,30 +1,10 @@
-const abot = require('../dist/index.cjs');
 const { Downloader, Search } = require('../dist/index.cjs');
 
-async function testCommonJS() {
-  console.log('🧪 Testing CommonJS Usage\n');
+const downloader = new Downloader();
+const search = new Search();
 
+async function allTestScraping() {
   try {
-    console.log('1. Using default export:');
-
-    const fbResult = await abot.downloader.facebook(
-      'https://www.facebook.com/video/example'
-    );
-    console.log('✅ Facebook result:', fbResult.status);
-
-    const searchResult = await abot.search.sfileSearch('example', 1);
-    console.log(
-      '✅ Search result:',
-      searchResult.status,
-      searchResult.result?.length,
-      'items'
-    );
-
-    console.log('\n2. Using class instances:');
-
-    const downloader = new Downloader();
-    const search = new Search();
-
     const ttResult = await downloader.tiktokDownloader(
       'https://www.tiktok.com/@user/video/123'
     );
@@ -39,12 +19,20 @@ async function testCommonJS() {
     );
   } catch (error) {
     console.error('❌ Error:', error.message);
-    console.log('Note: Errors are expected with demo URLs');
+  }
+}
+
+async function singgleTest() {
+  try {
+    const test = await search.ytSearch('younglex');
+    console.log('✅result:', test);
+  } catch (error) {
+    console.error('❌ Error:', error.message);
   }
 }
 
 if (require.main === module) {
-  testCommonJS();
+  singgleTest();
 }
 
-module.exports = { testCommonJS };
+module.exports = { singgleTest };

@@ -6,6 +6,7 @@ import {
     WallpaperResult,
     WikimediaResult,
     YtPlayResult,
+    YtSearchResult,
 } from '../../types/index.js';
 
 declare global {
@@ -75,7 +76,7 @@ export default class Search {
         }
     }
 
-    async ytSearch(query: string) {
+    async ytSearch(query: string): Promise<ApiResponse<YtSearchResult[]>> {
         try {
             const headers = {
                 accept: "*/*",
@@ -95,11 +96,21 @@ export default class Search {
             );
 
             const data = response.data;
+            const videos = data?.data?.items || [];
+            const results: YtSearchResult[] = videos.map((item: {
+                title: string;
+                thumbnail: string;
+                url: string;
+            }) => ({
+                title: item.title,
+                thumbnail: item.thumbnail,
+                url: item.url
+            }));
 
             return {
                 creator: global.creator,
                 status: 200,
-                result: data,
+                result: results,
             };
         } catch (error) {
             return {
