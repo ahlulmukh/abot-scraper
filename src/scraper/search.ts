@@ -9,6 +9,7 @@ import {
 } from '../../types/index.js';
 
 declare global {
+    // eslint-disable-next-line no-var
     var creator: string;
 }
 
@@ -64,6 +65,41 @@ export default class Search {
                 creator: global.creator,
                 status: 200,
                 result: results,
+            };
+        } catch (error) {
+            return {
+                creator: global.creator,
+                status: false,
+                msg: error instanceof Error ? error.message : 'Unknown error'
+            };
+        }
+    }
+
+    async ytSearch(query: string) {
+        try {
+            const headers = {
+                accept: "*/*",
+                "accept-language": "en-US,en;q=0.9,ar;q=0.8,id;q=0.7,vi;q=0.6",
+                priority: "u=1, i",
+                "sec-ch-ua":
+                    '"Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": '"Windows"',
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "cross-site",
+            }
+            const response: AxiosResponse = await axios.get(
+                `https://line.1010diy.com/web/free-mp3-finder/query?q=${encodeURIComponent(query)}&type=youtube&pageToken=`,
+                { headers }
+            );
+
+            const data = response.data;
+
+            return {
+                creator: global.creator,
+                status: 200,
+                result: data,
             };
         } catch (error) {
             return {

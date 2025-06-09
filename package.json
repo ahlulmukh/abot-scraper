@@ -3,14 +3,14 @@
   "version": "1.1.3",
   "description": "scraper random for downloader and searching",
   "type": "module",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "files": [
@@ -21,15 +21,12 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "npm run build:clean && npm run build:ts && npm run build:esm && npm run build:cjs",
-    "build:clean": "node scripts/clean.js",
-    "build:ts": "tsc",
-    "build:esm": "node scripts/build-esm.js",
-    "build:cjs": "node scripts/build-cjs.js",
+    "build": "tsup",
+    "build:watch": "tsup --watch",
     "lint": "eslint src/**/*.ts --fix",
     "lint:check": "eslint src/**/*.ts",
     "type-check": "tsc --noEmit",
-    "dev": "tsc --watch",
+    "dev": "tsup --watch",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -58,9 +55,10 @@
   "devDependencies": {
     "@types/node": "^22.15.27",
     "@types/qs": "^6.9.15",
-    "typescript": "^5.5.0",
-    "typescript-eslint": "^8.0.0",
     "eslint": "^9.0.0",
-    "prettier": "^3.3.0"
+    "prettier": "^3.3.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0"
   }
 }

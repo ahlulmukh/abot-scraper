@@ -57,6 +57,7 @@ interface YouTubeApiResponse {
 }
 
 declare global {
+    // eslint-disable-next-line no-var
     var creator: string;
 }
 
