@@ -1,50 +1,38 @@
-const abot = require("abot-scraper");
-const { Downloader, Search } = require("abot-scraper");
+const { Downloader, Search } = require('../dist/index.cjs');
 
-async function testCommonJS() {
-  console.log("🧪 Testing CommonJS Usage\n");
+const downloader = new Downloader();
+const search = new Search();
 
+async function allTestScraping() {
   try {
-    console.log("1. Using default export:");
-
-    const fbResult = await abot.downloader.facebook(
-      "https://www.facebook.com/video/example"
-    );
-    console.log("✅ Facebook result:", fbResult.status);
-
-    const searchResult = await abot.search.sfileSearch("example", 1);
-    console.log(
-      "✅ Search result:",
-      searchResult.status,
-      searchResult.result?.length,
-      "items"
-    );
-
-    console.log("\n2. Using class instances:");
-
-    const downloader = new Downloader();
-    const search = new Search();
-
     const ttResult = await downloader.tiktokDownloader(
-      "https://www.tiktok.com/@user/video/123"
+      'https://www.tiktok.com/@user/video/123'
     );
-    console.log("✅ TikTok result:", ttResult.status);
+    console.log('✅ TikTok result:', ttResult.status);
 
-    const wallpaperResult = await search.wallpaper("nature");
+    const wallpaperResult = await search.wallpaper('nature');
     console.log(
-      "✅ Wallpaper result:",
+      '✅ Wallpaper result:',
       wallpaperResult.status,
       wallpaperResult.result?.length,
-      "items"
+      'items'
     );
   } catch (error) {
-    console.error("❌ Error:", error.message);
-    console.log("Note: Errors are expected with demo URLs");
+    console.error('❌ Error:', error.message);
+  }
+}
+
+async function singgleTest() {
+  try {
+    const test = await search.ytSearch('younglex');
+    console.log('✅result:', test);
+  } catch (error) {
+    console.error('❌ Error:', error.message);
   }
 }
 
 if (require.main === module) {
-  testCommonJS();
+  singgleTest();
 }
 
-module.exports = { testCommonJS };
+module.exports = { singgleTest };

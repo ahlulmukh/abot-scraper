@@ -3,7 +3,7 @@ import abot, {
     Search,
     downloader,
     search
-} from "abot-scraper";
+} from "../dist/index.js";
 
 async function demonstrateTypedUsage() {
     console.log("🎯 TypeScript Example for abot-scraper\n");

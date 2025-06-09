@@ -106,6 +106,12 @@ export interface WikimediaResult {
     image: string;
 }
 
+export interface YtSearchResult {
+    title: string;
+    thumbnail: string;
+    url: string;
+}
+
 export interface YoutubeResult {
     title: string;
     thumbnail: string;
@@ -144,6 +150,8 @@ export declare class Downloader {
 
 export declare class Search {
     sfileSearch(query: string, page?: number): Promise<ApiResponse<SFileSearchItem[]>>;
+
+    ytSearch(query: string): Promise<ApiResponse<YtSearchResult[]>>;
 
     ytPlay(text: string): Promise<ApiResponse<YouTubePlayResult>>;
 
