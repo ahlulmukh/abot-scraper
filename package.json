@@ -18,7 +18,7 @@
     "types"
   ],
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "build": "tsup",
@@ -27,7 +27,12 @@
     "lint:check": "eslint src/**/*.ts",
     "type-check": "tsc --noEmit",
     "dev": "tsup --watch",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "npm run lint:check && npm run type-check && npm run build",
+    "release:patch": "npm version patch && git push origin main --tags",
+    "release:minor": "npm version minor && git push origin main --tags",
+    "release:major": "npm version major && git push origin main --tags",
+    "publish:dry": "npm publish --dry-run"
   },
   "keywords": [
     "scraper",
