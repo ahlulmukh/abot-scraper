@@ -10,7 +10,9 @@ async function allTestScraping() {
     );
     console.log('✅ TikTok result:', ttResult.status);
 
-    const wallpaperResult = await search.wallpaper('nature');
+    const wallpaperResult = await search.wallpaper(
+      'https://youtu.be/QKJNaEi3T70?si=GHIu7nZ0NujiMlBi'
+    );
     console.log(
       '✅ Wallpaper result:',
       wallpaperResult.status,
@@ -24,7 +26,7 @@ async function allTestScraping() {
 
 async function singgleTest() {
   try {
-    const test = await search.ytSearch('younglex');
+    const test = await downloader.igstory('cristiano');
     console.log('✅result:', test);
   } catch (error) {
     console.error('❌ Error:', error.message);
