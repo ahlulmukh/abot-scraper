@@ -157,24 +157,30 @@ export default class Downloader {
     }
 
     async igstory(username: string): Promise<ApiResponse<InstagramStoriesResult>> {
-        function encodeParameter(username: string): string {
-            const parameter = `-1::${username}::rJP2tBRKf6ktbRqPUBtRE9klgBWb7d`;
-            const encoded = Buffer.from(parameter).toString('base64');
-            return encoded
-                .replace(/[+]/g, '.')
-                .replace(/[/]/g, '_')
-                .replace(/[=]/g, '-');
+        const payload = {
+            username: username,
         }
-
+        const headers = {
+            'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/',
+            accept: 'application/json, text/plain, */*',
+            'accept-language': 'en-US,en;q=0.9,ar;q=0.8,id;q=0.7,vi;q=0.6',
+            'content-type': 'application/json',
+            priority: 'u=1, i',
+            'sec-ch-ua':
+                '"Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            Referer: 'https://storyviewer.com/',
+            'Referrer-Policy': 'strict-origin-when-cross-origin',
+        };
         try {
-            const headers = {
-                'User-Agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/',
-            };
-
-            const encodedParameter = encodeParameter(username);
-            const response: AxiosResponse = await axios.get(
-                `https://instanavigation.net/api/v1/stories/${encodedParameter}`,
+            const response: AxiosResponse = await axios.post(
+                `https://storyviewer.com/api/data`,
+                payload,
                 { headers }
             );
 
