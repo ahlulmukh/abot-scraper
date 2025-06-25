@@ -28,7 +28,10 @@
     "type-check": "tsc --noEmit",
     "dev": "tsup --watch",
     "prepublishOnly": "npm run build",
-    "test": "npm run lint:check && npm run type-check && npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "npm run lint:check && npm run type-check && npm run test && npm run build",
     "publish:dry": "npm publish --dry-run"
   },
   "keywords": [
@@ -56,10 +59,14 @@
     "qs": "^6.14.0"
   },
   "devDependencies": {
+    "@jest/globals": "^30.0.3",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.15.27",
     "@types/qs": "^6.9.15",
     "eslint": "^9.0.0",
+    "jest": "^30.0.3",
     "prettier": "^3.3.0",
+    "ts-jest": "^29.4.0",
     "tsup": "^8.5.0",
     "typescript": "^5.5.0",
     "typescript-eslint": "^8.0.0"
