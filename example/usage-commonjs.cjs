@@ -26,7 +26,7 @@ async function allTestScraping() {
 
 async function singgleTest() {
   try {
-    const test = await downloader.igstory('cristiano');
+    const test = await search.ytSearch('abba dancing queen');
     console.log('✅result:', test);
   } catch (error) {
     console.error('❌ Error:', error.message);
