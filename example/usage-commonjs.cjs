@@ -1,7 +1,10 @@
-const { Downloader, Search } = require('../dist/index.cjs');
+const fs = require('fs');
+const path = require('path');
+const { Downloader, Search, Tools } = require('../dist/index.cjs');
 
 const downloader = new Downloader();
 const search = new Search();
+const tools = new Tools();
 
 async function allTestScraping() {
   try {
@@ -26,8 +29,14 @@ async function allTestScraping() {
 
 async function singgleTest() {
   try {
-    const test = await search.ytSearch('abba dancing queen');
-    console.log('✅result:', test);
+    const imagePath = path.join(__dirname, '..', 'test.jpeg');
+    const imageBuffer = fs.readFileSync(imagePath);
+
+    console.log('📁 Reading image:', imagePath);
+    console.log('📊 Buffer size:', imageBuffer.length, 'bytes');
+
+    const test = await tools.uploadImage(imageBuffer);
+    console.log('✅ result:', test);
   } catch (error) {
     console.error('❌ Error:', error.message);
   }
