@@ -7,8 +7,8 @@ export default class Tools {
     reminiUpscale = (buffer: Buffer) => {
         return new Promise((resolve, reject) => {
             const form = new FormData();
-            form.append('type', 'Enhancer')
-            form.append('original_image_file', buffer)
+            form.append('type', 'Enhancer');
+            form.append('original_image_file', buffer, 'image.jpg');
 
             axios.post('https://api.remaker.ai/api/pai/v4/ai-enhance/create-job-new', form, {
                 headers: {
