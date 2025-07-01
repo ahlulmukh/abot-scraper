@@ -6,7 +6,7 @@ global.creator = '@abotscraper – ahmuq'
 
 export default class Tools {
 
-    RemoveBackground = (image: string) => {
+    removeBackground = (image: string) => {
         return new Promise((resolve, reject) => {
             const payload = {
                 image
@@ -39,27 +39,29 @@ export default class Tools {
                                     job_id: jobId,
                                     image_url: jobResponse.data.output
                                 }
-                            })
+                            });
                         } else if (jobResponse.data.status === "failed") {
                             reject({
                                 creator: global.creator,
                                 status: false,
                                 error: `job failed`,
-                            })
+                            });
+                        } else if (jobResponse.data.status === "starting" || jobResponse.data.status === "processing") {
+                            setTimeout(checkJobStatus, 3000);
                         } else {
                             reject({
                                 creator: global.creator,
                                 status: false,
-                                error: `job status unknown`,
-                            })
+                                error: `job status unknown: ${jobResponse.data.status}`,
+                            });
                         }
                     }).catch((error) => {
                         reject({
                             creator: global.creator,
                             status: false,
                             error: error.message,
-                        })
-                    })
+                        });
+                    });
                 };
                 checkJobStatus();
             }).catch((error) => {
@@ -71,6 +73,7 @@ export default class Tools {
             });
         })
     }
+
     reminiUpscale = (buffer: Buffer) => {
         return new Promise((resolve, reject) => {
             const form = new FormData();
