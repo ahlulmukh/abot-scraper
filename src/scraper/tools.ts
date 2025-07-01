@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import FormData from 'form-data';
-
+import Generator from '../utils/generator.js';
 global.creator = '@abotscraper – ahmuq'
+
 
 export default class Tools {
     reminiUpscale = (buffer: Buffer) => {
@@ -9,12 +10,13 @@ export default class Tools {
             const form = new FormData();
             form.append('type', 'Enhancer');
             form.append('original_image_file', buffer, 'blob');
+            const productSerial = Generator.getFingerprint();
             axios.post('https://api.remaker.ai/api/pai/v4/ai-enhance/create-job-new', form, {
                 headers: {
                     ...form.getHeaders(),
                     'authorization': '',
                     'product-code': '067003',
-                    'product-serial': '24d7e0c0b939f686aaa76f532c3efcd4',
+                    'product-serial': productSerial,
                     'Referer': 'https://remaker.ai/',
                 }
             }).then((createJobResponse: AxiosResponse) => {
@@ -32,7 +34,7 @@ export default class Tools {
                         headers: {
                             'authorization': '',
                             'product-code': '067003',
-                            'product-serial': '24d7e0c0b939f686aaa76f532c3efcd4',
+                            'product-serial': productSerial,
                             'Referer': 'https://remaker.ai/',
                         }
                     }).then((jobResponse: AxiosResponse) => {
