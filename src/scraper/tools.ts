@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import FormData from 'form-data';
 import Generator from '../utils/generator.js';
-
 global.creator = '@abotscraper – ahmuq'
 
 
