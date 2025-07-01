@@ -84,7 +84,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.release.outputs.new_version }}
-          release_name: Release v${{ steps.release.outputs.new_version }}
+          release_name: v${{ steps.release.outputs.new_version }}
           body: |
             ## Changes in v${{ steps.release.outputs.new_version }}
 
