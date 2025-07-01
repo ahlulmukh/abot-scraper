@@ -7,7 +7,6 @@ import {
     InstagramMediaItem,
     SfileDownloadResult,
     TikTokResult,
-    YoutubeResult,
     YoutubeResultV2
 } from '../../types/index.js';
 import Generator from '../utils/generator.js';
@@ -200,74 +199,6 @@ export default class Downloader {
         }
     }
 
-
-
-    async youtubeDownloader(url: string): Promise<ApiResponse<YoutubeResult>> {
-        try {
-            const config = qs.stringify({
-                url: url,
-                q_auto: 0,
-                ajax: 1,
-                lang: 'en',
-            });
-
-            const headers = {
-                'user-agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            };
-
-            const response: AxiosResponse = await axios.post(
-                'https://yt1s.net/ajax?retry=undefined&platform=youtube',
-                config,
-                { headers }
-            );
-
-            const $ = cheerio.load(response.data.result);
-            const title = $('.caption b').text().trim();
-            const downloadLinks = {
-                '480p': $('a[data-fquality="480p"]').attr('href') || '',
-                '720p': $('a[data-fquality="720p"]').attr('href') || '',
-                '1080p': $('a[data-fquality="1080p"]').attr('href') || '',
-            };
-            const thumbnailUrl = $('.thumbnail.cover img').attr('src');
-
-            const mp3ConvertElement = $('#convert-mp3 a');
-            const hrefAttr = mp3ConvertElement.attr('href');
-
-            if (!hrefAttr) throw new Error('MP3 conversion link not found.');
-
-            const mp3ConvertTokenMatch = hrefAttr.match(
-                /mp3_convert_task\('(\d+)',\s*'([^']+)'\)/
-            );
-
-            if (!mp3ConvertTokenMatch)
-                throw new Error('MP3 conversion token not found.');
-
-            const mp3ConvertToken = mp3ConvertTokenMatch[2];
-
-            const mp3Response: AxiosResponse = await axios.get(
-                `https://api.fabdl.com/youtube/mp3-convert-task?token=${mp3ConvertToken}`
-            );
-
-            return {
-                creator: global.creator,
-                status: 200,
-                result: {
-                    title: title,
-                    thumbnail: thumbnailUrl || '',
-                    downloadLinks: downloadLinks,
-                    mp3DownloadUrl: `https://api.fabdl.com${mp3Response.data.result.download_url}`,
-                },
-            };
-        } catch (error) {
-            return {
-                creator: global.creator,
-                status: false,
-                msg: error instanceof Error ? error.message : 'Unknown error',
-            };
-        }
-    }
-
     ytMp3Downloader = (url: string) => {
         return new Promise((resolve, reject) => {
             const headers = {
@@ -365,7 +296,7 @@ export default class Downloader {
     };
 
 
-    async youtubeDownloaderV2(url: string): Promise<ApiResponse<YoutubeResultV2>> {
+    async youtubeDownloader(url: string): Promise<ApiResponse<YoutubeResultV2>> {
         try {
             const timestamp = this.generator.generateTimeStampYoutubeDL();
             const footer = this.generator.generateFooterYoutubeDL(timestamp, url);

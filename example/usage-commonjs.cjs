@@ -82,9 +82,20 @@ class AbotScraper {
       console.log('error:', error);
     }
   }
+
+  async ytDownloaderTest() {
+    try {
+      const response = await this.downloader.youtubeDownloader(
+        'https://youtu.be/H_z0t5NQs7U?si=WnXwRNrNIsdaIERu'
+      );
+      console.log('result:', response);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  }
 }
 
 (async () => {
   const scraper = new AbotScraper();
-  await scraper.instagramDownloader();
+  await scraper.ytDownloaderTest();
 })();
