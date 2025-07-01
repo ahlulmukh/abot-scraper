@@ -8,9 +8,9 @@ describe('Simple Integration Tests', () => {
             expect(downloader).toBeInstanceOf(Downloader);
             expect(typeof downloader.tiktokDownloader).toBe('function');
             expect(typeof downloader.youtubeDownloader).toBe('function');
-            expect(typeof downloader.instagram).toBe('function');
-            expect(typeof downloader.facebook).toBe('function');
-            expect(typeof downloader.igstory).toBe('function');
+            expect(typeof downloader.instagramDownloader).toBe('function');
+            expect(typeof downloader.facebookDownloader).toBe('function');
+            expect(typeof downloader.ytMp3Downloader).toBe('function');
             expect(typeof downloader.sfileDownloader).toBe('function');
         });
 
@@ -20,12 +20,17 @@ describe('Simple Integration Tests', () => {
             expect(typeof search.sfileSearch).toBe('function');
             expect(typeof search.ytSearch).toBe('function');
             expect(typeof search.wallpaper).toBe('function');
+            expect(typeof search.igStory).toBe('function');
+            expect(typeof search.wikimedia).toBe('function');
         });
 
         it('should create Tools instance', () => {
             const tools = new Tools();
             expect(tools).toBeInstanceOf(Tools);
             expect(typeof tools.uploadImage).toBe('function');
+            expect(typeof tools.removeBackground).toBe('function');
+            expect(typeof tools.reminiV1).toBe('function');
+            expect(typeof tools.reminiV2).toBe('function');
         });
     });
 
