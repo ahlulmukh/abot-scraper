@@ -86,9 +86,10 @@ export default class Tools {
             axios.post('https://api2.pixelcut.app/image/upscale/v1', form, {
                 headers: {
                     ...form.getHeaders(),
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     Referer: 'https://www.pixelcut.ai/',
                     Origin: 'https://www.pixelcut.ai',
+                    'x-client-version': 'web'
                 }
             }).then((Response: AxiosResponse) => {
                 if (Response.data.result_url) {
