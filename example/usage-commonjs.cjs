@@ -93,9 +93,78 @@ class AbotScraper {
       console.log('error:', error);
     }
   }
+
+  async ytmp3DownloaderTest() {
+    try {
+      const response = await this.downloader.ytMp3Downloader(
+        'https://youtu.be/H_z0t5NQs7U?si=WnXwRNrNIsdaIERu'
+      );
+      console.log('result:', response);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  }
+
+  async sfileDownloaderTest() {
+    try {
+      const response = await this.downloader.sfileDownloader(
+        'https://sfile.mobi/8tZaFADE7Ca'
+      );
+      console.log('result', response);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  }
+
+  // Function Search
+
+  async sfileSearchTest() {
+    try {
+      const response = await this.search.sfileSearch('Capcut Pro');
+      console.log('result', response);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  }
+
+  async ytSearchTest() {
+    try {
+      const response = await this.search.ytSearch('Phonk Terbaru');
+      console.log('result', response);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  }
+
+  async igStoryTest() {
+    try {
+      const response = await this.search.igStory('cristiano');
+      console.log('result', response);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  }
+
+  async wallpaperTest() {
+    try {
+      const response = await this.search.wallpaper('anime');
+      console.log('result', response);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  }
+
+  async wikimediaTest() {
+    try {
+      const response = await this.search.wikimedia('anime');
+      console.log('result', response);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  }
 }
 
 (async () => {
   const scraper = new AbotScraper();
-  await scraper.ytDownloaderTest();
+  await scraper.wikimediaTest();
 })();
