@@ -13,17 +13,6 @@ import {
 import Generator from '../utils/generator.js';
 
 
-interface FileItem {
-    __type: string;
-    video_url?: string;
-    download_url?: string;
-    [key: string]: unknown;
-}
-
-interface InstagramFilesResponse {
-    files: FileItem[];
-}
-
 interface YouTubeFormat {
     quality: string;
     video_url: string;
@@ -212,49 +201,6 @@ export default class Downloader {
     }
 
 
-    async instagramDownloaderTemp(url: string): Promise<ApiResponse<InstagramMediaItem[]>> {
-        try {
-            const config = new URLSearchParams({
-                url: url,
-                new: '2',
-                lang: 'en',
-                app: '',
-            });
-
-            const headers = {
-                'user-agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            };
-
-            const response: AxiosResponse<InstagramFilesResponse> = await axios.post(
-                'https://snapinsta.app/get-data.php',
-                config,
-                { headers }
-            );
-
-            const downloadLinks = response.data.files
-                .map((file: FileItem) =>
-                    file.__type === 'GraphVideo'
-                        ? { type: 'video' as const, url: file.video_url || '' }
-                        : file.__type === 'GraphImage'
-                            ? { type: 'image' as const, url: file.download_url || '' }
-                            : null
-                )
-                .filter((link: InstagramMediaItem | null): link is InstagramMediaItem => link !== null);
-
-            return {
-                creator: global.creator,
-                status: 200,
-                result: downloadLinks,
-            };
-        } catch (error) {
-            return {
-                creator: global.creator,
-                status: false,
-                msg: error instanceof Error ? error.message : 'Unknown error',
-            };
-        }
-    }
 
     async youtubeDownloader(url: string): Promise<ApiResponse<YoutubeResult>> {
         try {
