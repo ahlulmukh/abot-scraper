@@ -8,13 +8,25 @@ export default class Tools {
 
     removeBackground = (image: string) => {
         return new Promise((resolve, reject) => {
+            const headers = {
+                "accept": "*/*",
+                "accept-language": "en-US,en;q=0.9,ar;q=0.8,id;q=0.7,vi;q=0.6",
+                "content-type": "application/json",
+                "priority": "u=1, i",
+                "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Microsoft Edge\";v=\"138\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"Windows\"",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "referrer": "https://aibackgroundremover.org/",
+            }
+
             const payload = {
                 image
             }
             axios.post("https://aibackgroundremover.org/api/remove-bg", payload, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: headers
             }).then((CreateJobResponse: AxiosResponse) => {
                 if (CreateJobResponse.status !== 200) {
                     reject({
@@ -27,10 +39,7 @@ export default class Tools {
                 const jobId = CreateJobResponse.data.id;
                 const checkJobStatus = () => {
                     axios.get(`https://aibackgroundremover.org/api/check-status?id=${jobId}`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Referer: 'https://aibackgroundremover.org/',
-                        }
+                        headers: headers
                     }).then((jobResponse: AxiosResponse) => {
                         console.log('✅ jobResponse:', jobResponse.data);
                         if (jobResponse.data.status === "succeeded") {
@@ -42,13 +51,7 @@ export default class Tools {
                                     image_url: jobResponse.data.output
                                 }
                             });
-                        } else if (jobResponse.data.status === "failed") {
-                            reject({
-                                creator: global.creator,
-                                status: false,
-                                error: `job status checking failed`,
-                            });
-                        } else if (jobResponse.data.status === "starting" || jobResponse.data.status === "processing") {
+                        } else if (jobResponse.data.status === "starting") {
                             setTimeout(checkJobStatus, 3000);
                         } else {
                             reject({
