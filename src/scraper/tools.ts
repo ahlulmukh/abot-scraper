@@ -5,6 +5,72 @@ global.creator = '@abotscraper – ahmuq'
 
 
 export default class Tools {
+
+    RemoveBackground = (image: string) => {
+        return new Promise((resolve, reject) => {
+            const payload = {
+                image
+            }
+            axios.post("https://aibackgroundremover.org/api/remove-bg", payload, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((CreateJobResponse: AxiosResponse) => {
+                if (CreateJobResponse.status !== 200) {
+                    reject({
+                        creator: global.creator,
+                        status: false,
+                        error: `job creation failed`,
+                    });
+                    return;
+                }
+                const jobId = CreateJobResponse.data.id;
+                const checkJobStatus = () => {
+                    axios.get(`https://aibackgroundremover.org/api/check-status?id=${jobId}`, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((jobResponse: AxiosResponse) => {
+                        if (jobResponse.data.status === "succeeded") {
+                            resolve({
+                                creator: global.creator,
+                                status: true,
+                                result: {
+                                    job_id: jobId,
+                                    image_url: jobResponse.data.output
+                                }
+                            })
+                        } else if (jobResponse.data.status === "failed") {
+                            reject({
+                                creator: global.creator,
+                                status: false,
+                                error: `job failed`,
+                            })
+                        } else {
+                            reject({
+                                creator: global.creator,
+                                status: false,
+                                error: `job status unknown`,
+                            })
+                        }
+                    }).catch((error) => {
+                        reject({
+                            creator: global.creator,
+                            status: false,
+                            error: error.message,
+                        })
+                    })
+                };
+                checkJobStatus();
+            }).catch((error) => {
+                reject({
+                    creator: global.creator,
+                    status: false,
+                    error: error.message,
+                });
+            });
+        })
+    }
     reminiUpscale = (buffer: Buffer) => {
         return new Promise((resolve, reject) => {
             const form = new FormData();
