@@ -16,6 +16,28 @@ class AbotScraper {
     console.log('✅ result:', test);
   }
 
+  async reminiV1Test() {
+    try {
+      const imagePath = path.join(__dirname, '..', 'test.jpeg');
+      const imageBuffer = fs.readFileSync(imagePath);
+      const test = await this.tools.reminiV1(imageBuffer);
+      console.log('✅ result:', test);
+    } catch (error) {
+      console.log('❌ error:', error);
+    }
+  }
+
+  async reminiV2Test() {
+    try {
+      const imagePath = path.join(__dirname, '..', 'test.jpeg');
+      const imageBuffer = fs.readFileSync(imagePath);
+      const test = await this.tools.reminiV2(imageBuffer);
+      console.log('✅ result:', test);
+    } catch (error) {
+      console.log('❌ error:', error);
+    }
+  }
+
   async RemoveBgTest() {
     try {
       const url = 'https://files.catbox.moe/rexka9.jpg';
@@ -29,5 +51,5 @@ class AbotScraper {
 
 (async () => {
   const scraper = new AbotScraper();
-  await scraper.RemoveBgTest();
+  await scraper.reminiV2Test();
 })();
