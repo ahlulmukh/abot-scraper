@@ -17,9 +17,13 @@ class AbotScraper {
   }
 
   async RemoveBgTest() {
-    const url = 'https://files.catbox.moe/rexka9.jpg';
-    const result = await this.tools.removeBackground(url);
-    console.log('✅ result:', result);
+    try {
+      const url = 'https://files.catbox.moe/rexka9.jpg';
+      const result = await this.tools.removeBackground(url);
+      console.log('✅ result:', result);
+    } catch (error) {
+      console.log('❌ error:', error);
+    }
   }
 }
 

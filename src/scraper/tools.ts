@@ -28,9 +28,11 @@ export default class Tools {
                 const checkJobStatus = () => {
                     axios.get(`https://aibackgroundremover.org/api/check-status?id=${jobId}`, {
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            Referer: 'https://aibackgroundremover.org/',
                         }
                     }).then((jobResponse: AxiosResponse) => {
+                        console.log('✅ jobResponse:', jobResponse.data);
                         if (jobResponse.data.status === "succeeded") {
                             resolve({
                                 creator: global.creator,
@@ -44,7 +46,7 @@ export default class Tools {
                             reject({
                                 creator: global.creator,
                                 status: false,
-                                error: `job failed`,
+                                error: `job status checking failed`,
                             });
                         } else if (jobResponse.data.status === "starting" || jobResponse.data.status === "processing") {
                             setTimeout(checkJobStatus, 3000);
