@@ -2,14 +2,6 @@
 
 A versatile scraper package for downloading and searching content from various social media platforms.
 
-## Features
-
-- ✅ **Dual Package Support**: Works with both CommonJS (`require`) and ES Modules (`import`)
-- 🚀 **Built with Bun**: Optimized build process using Bun.js
-- 📱 **Multi-platform**: Supports Facebook, Instagram, TikTok, YouTube, and SFile
-- 🔍 **Search functionality**: Search content across supported platforms
-- 📝 **TypeScript Support**: Full TypeScript declarations included
-
 ## Installation
 
 ### Stable Version
@@ -38,14 +30,14 @@ npm install github:ahlulmukh/abot-scraper
 
 ```javascript
 // Default import
-const abot = require("abot-scraper");
+const abot = require('abot-scraper');
 
 // Use the pre-instantiated classes
-const result = await abot.downloader.facebook("https://facebook.com/video/123");
-const searchResult = await abot.search.sfileSearch("query", 1);
+const result = await abot.downloader.facebook('https://facebook.com/video/123');
+const searchResult = await abot.search.sfileSearch('query', 1);
 
 // Or import classes directly
-const { Downloader, Search } = require("abot-scraper");
+const { Downloader, Search } = require('abot-scraper');
 const downloader = new Downloader();
 const search = new Search();
 ```
@@ -54,14 +46,14 @@ const search = new Search();
 
 ```javascript
 // Default import
-import abot from "abot-scraper";
+import abot from 'abot-scraper';
 
 // Use the pre-instantiated classes
-const result = await abot.downloader.facebook("https://facebook.com/video/123");
-const searchResult = await abot.search.sfileSearch("query", 1);
+const result = await abot.downloader.facebook('https://facebook.com/video/123');
+const searchResult = await abot.search.sfileSearch('query', 1);
 
 // Or import classes directly
-import { Downloader, Search } from "abot-scraper";
+import { Downloader, Search } from 'abot-scraper';
 const downloader = new Downloader();
 const search = new Search();
 ```
@@ -76,16 +68,16 @@ import abot, {
   Search,
   type ApiResponse,
   type FacebookResult,
-} from "abot-scraper";
+} from 'abot-scraper';
 
 // TypeScript will provide full type checking and autocomplete
 const result: ApiResponse<FacebookResult> = await abot.downloader.facebook(
-  "https://facebook.com/video/123"
+  'https://facebook.com/video/123'
 );
 
 // Types are automatically inferred
 const downloader = new Downloader();
-const fbResult = await downloader.facebook("https://example.com"); // Return type is known
+const fbResult = await downloader.facebook('https://example.com'); // Return type is known
 ```
 
 ## API Reference
@@ -107,29 +99,29 @@ The `Downloader` class provides methods to download content from various platfor
 
 ```javascript
 // CommonJS
-const { downloader } = require("abot-scraper");
+const { downloader } = require('abot-scraper');
 
 // ES Modules
-import { downloader } from "abot-scraper";
+import { downloader } from 'abot-scraper';
 
 // Download YouTube video
 const result = await downloader.youtubeDownloader(
-  "https://youtu.be/j_MlBCb9-m8"
+  'https://youtu.be/j_MlBCb9-m8'
 );
 console.log(result);
 
 // Download TikTok video
 const tiktokResult = await downloader.tiktokDownloader(
-  "https://tiktok.com/@user/video/123"
+  'https://tiktok.com/@user/video/123'
 );
 console.log(tiktokResult);
 
 // Download Facebook video
-const fbResult = await downloader.facebook("https://facebook.com/video/123");
+const fbResult = await downloader.facebook('https://facebook.com/video/123');
 console.log(fbResult);
 
 // Get Instagram stories
-const storiesResult = await downloader.igstory("username");
+const storiesResult = await downloader.igstory('username');
 console.log(storiesResult);
 ```
 
@@ -148,21 +140,21 @@ The `Search` class provides methods to search for content across various platfor
 
 ```javascript
 // CommonJS
-const { search } = require("abot-scraper");
+const { search } = require('abot-scraper');
 
 // ES Modules
-import { search } from "abot-scraper";
+import { search } from 'abot-scraper';
 
 // Search YouTube videos
-const ytResults = await search.ytPlay("music video");
+const ytResults = await search.ytPlay('music video');
 console.log(ytResults);
 
 // Search wallpapers
-const wallpapers = await search.wallpaper("abstract art", "1");
+const wallpapers = await search.wallpaper('abstract art', '1');
 console.log(wallpapers);
 
 // Search Wikimedia
-const wikimediaResults = await search.wikimedia("nature photos");
+const wikimediaResults = await search.wikimedia('nature photos');
 console.log(wikimediaResults);
 ```
 
@@ -173,18 +165,18 @@ All methods return promises and should be wrapped in try-catch blocks or use `.c
 ```javascript
 try {
   const result = await downloader.youtubeDownloader(
-    "https://youtu.be/invalid-url"
+    'https://youtu.be/invalid-url'
   );
   console.log(result);
 } catch (error) {
-  console.error("Download failed:", error.message);
+  console.error('Download failed:', error.message);
 }
 
 // Or using .catch()
 downloader
-  .facebook("https://facebook.com/video/123")
-  .then((result) => console.log(result))
-  .catch((error) => console.error("Error:", error));
+  .facebook('https://facebook.com/video/123')
+  .then(result => console.log(result))
+  .catch(error => console.error('Error:', error));
 ```
 
 ## Requirements
