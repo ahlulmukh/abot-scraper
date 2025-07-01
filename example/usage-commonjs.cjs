@@ -86,5 +86,5 @@ class AbotScraper {
 
 (async () => {
   const scraper = new AbotScraper();
-  await scraper.facebookDownloader();
+  await scraper.instagramDownloader();
 })();

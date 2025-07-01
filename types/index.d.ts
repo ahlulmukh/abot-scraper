@@ -29,6 +29,7 @@ export interface InstagramStoriesResult {
 export interface InstagramMediaItem {
     type: "video" | "image";
     url: string;
+    preview?: string;
 }
 
 export interface YouTubeDownloadLinks {

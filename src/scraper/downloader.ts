@@ -151,8 +151,68 @@ export default class Downloader {
         }
     }
 
-
     async instagramDownloader(url: string): Promise<ApiResponse<InstagramMediaItem[]>> {
+        try {
+            const payload = new URLSearchParams({ url });
+            const headers = {
+                accept: '*/*',
+                'accept-language': 'en-US,en;q=0.9,ar;q=0.8,id;q=0.7,vi;q=0.6',
+                'content-type': 'application/x-www-form-urlencoded',
+                priority: 'u=1, i',
+                'sec-ch-ua':
+                    '"Not)A;Brand";v="8", "Chromium";v="138", "Microsoft Edge";v="138"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+            };
+
+            const response: AxiosResponse = await axios.post(
+                'https://snapinsta.llc/process',
+                payload,
+                { headers }
+            );
+
+            const $ = cheerio.load(response.data);
+            const downloadItems: InstagramMediaItem[] = [];
+            $('.download-item').each((_index, element) => {
+                const $element = $(element);
+                const previewImg = $element.find('.media-box img').attr('src');
+                const downloadLink = $element.find('.download-media').attr('href');
+                const downloadText = $element.find('.download-media').text().trim();
+                const isVideo = downloadText.toLowerCase().includes('video') ||
+                    $element.find('.icon-downvid').length > 0;
+                if (downloadLink) {
+                    const mediaItem: InstagramMediaItem = {
+                        type: isVideo ? 'video' : 'image',
+                        url: downloadLink
+                    };
+                    if (previewImg) {
+                        mediaItem.preview = previewImg;
+                    }
+                    downloadItems.push(mediaItem);
+                }
+            });
+            if (downloadItems.length === 0) {
+                throw new Error('No media items found in the response.');
+            }
+            return {
+                creator: global.creator,
+                status: 200,
+                result: downloadItems,
+            };
+        } catch (error) {
+            return {
+                creator: global.creator,
+                status: false,
+                msg: error instanceof Error ? error.message : 'Unknown error',
+            };
+        }
+    }
+
+
+    async instagramDownloaderTemp(url: string): Promise<ApiResponse<InstagramMediaItem[]>> {
         try {
             const config = new URLSearchParams({
                 url: url,
