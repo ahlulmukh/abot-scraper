@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import * as cheerio from 'cheerio';
 import {
     ApiResponse,
+    InstagramStoriesResult,
     SfileSearchResult,
     WallpaperResult,
     WikimediaResult,
@@ -12,6 +13,19 @@ import {
 declare global {
     // eslint-disable-next-line no-var
     var creator: string;
+}
+
+interface StoryItem {
+    source: string;
+    [key: string]: unknown;
+}
+
+interface InstagramApiResponse {
+    stories: StoryItem[];
+    user_info: {
+        username: string;
+        [key: string]: unknown;
+    };
 }
 
 global.creator = '@abotscraper – ahmuq';
@@ -29,6 +43,55 @@ interface ConvertConfig {
 }
 
 export default class Search {
+    async igStory(username: string): Promise<ApiResponse<InstagramStoriesResult>> {
+        const payload = {
+            username: username,
+        }
+        const headers = {
+            'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/',
+            accept: 'application/json, text/plain, */*',
+            'accept-language': 'en-US,en;q=0.9,ar;q=0.8,id;q=0.7,vi;q=0.6',
+            'content-type': 'application/json',
+            priority: 'u=1, i',
+            'sec-ch-ua':
+                '"Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            Referer: 'https://storyviewer.com/',
+            'Referrer-Policy': 'strict-origin-when-cross-origin',
+        };
+        try {
+            const response: AxiosResponse = await axios.post(
+                `https://storyviewer.com/api/data`,
+                payload,
+                { headers }
+            );
+
+            const data: InstagramApiResponse = response.data;
+            const sources = data.stories.map((story: StoryItem) => story.source);
+
+            return {
+                creator: global.creator,
+                status: 200,
+                result: {
+                    user_info: data.user_info,
+                    links: sources,
+                },
+            };
+        } catch (error) {
+            return {
+                creator: global.creator,
+                status: false,
+                msg: error instanceof Error ? error.message : 'Unknown error',
+            };
+        }
+    }
+
+
     async sfileSearch(
         query: string,
         page: number = 1

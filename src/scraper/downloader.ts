@@ -5,26 +5,13 @@ import {
     ApiResponse,
     FacebookResult,
     InstagramMediaItem,
-    InstagramStoriesResult,
     SfileDownloadResult,
     TikTokResult,
     YoutubeResult,
-    YoutubeResultV2,
+    YoutubeResultV2
 } from '../../types/index.js';
 import Generator from '../utils/generator.js';
 
-interface StoryItem {
-    source: string;
-    [key: string]: unknown;
-}
-
-interface InstagramApiResponse {
-    stories: StoryItem[];
-    user_info: {
-        username: string;
-        [key: string]: unknown;
-    };
-}
 
 interface FileItem {
     __type: string;
@@ -70,7 +57,7 @@ export default class Downloader {
         this.generator = new Generator();
     }
 
-    async facebook(url: string): Promise<ApiResponse<FacebookResult>> {
+    async facebookDownloader(url: string): Promise<ApiResponse<FacebookResult>> {
         try {
             const headers = {
                 'User-Agent':
@@ -164,55 +151,8 @@ export default class Downloader {
         }
     }
 
-    async igstory(username: string): Promise<ApiResponse<InstagramStoriesResult>> {
-        const payload = {
-            username: username,
-        }
-        const headers = {
-            'User-Agent':
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/',
-            accept: 'application/json, text/plain, */*',
-            'accept-language': 'en-US,en;q=0.9,ar;q=0.8,id;q=0.7,vi;q=0.6',
-            'content-type': 'application/json',
-            priority: 'u=1, i',
-            'sec-ch-ua':
-                '"Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-origin',
-            Referer: 'https://storyviewer.com/',
-            'Referrer-Policy': 'strict-origin-when-cross-origin',
-        };
-        try {
-            const response: AxiosResponse = await axios.post(
-                `https://storyviewer.com/api/data`,
-                payload,
-                { headers }
-            );
 
-            const data: InstagramApiResponse = response.data;
-            const sources = data.stories.map((story: StoryItem) => story.source);
-
-            return {
-                creator: global.creator,
-                status: 200,
-                result: {
-                    user_info: data.user_info,
-                    links: sources,
-                },
-            };
-        } catch (error) {
-            return {
-                creator: global.creator,
-                status: false,
-                msg: error instanceof Error ? error.message : 'Unknown error',
-            };
-        }
-    }
-
-    async instagram(url: string): Promise<ApiResponse<InstagramMediaItem[]>> {
+    async instagramDownloader(url: string): Promise<ApiResponse<InstagramMediaItem[]>> {
         try {
             const config = new URLSearchParams({
                 url: url,

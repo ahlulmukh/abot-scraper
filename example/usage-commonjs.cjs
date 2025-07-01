@@ -47,9 +47,44 @@ class AbotScraper {
       console.log('❌ error:', error);
     }
   }
+
+  // Downloader Function
+
+  async downloaderTiktok() {
+    try {
+      const response = await this.downloader.tiktokDownloader(
+        'https://vt.tiktok.com/ZSB2LtXQF/'
+      );
+      console.log('result:', response);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  }
+
+  async facebookDownloader() {
+    try {
+      const response = await this.downloader.facebookDownloader(
+        'https://www.facebook.com/Add.Aja55/videos/1054552850113076'
+      );
+      console.log('result:', response);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  }
+
+  async instagramDownloader() {
+    try {
+      const response = await this.downloader.instagramDownloader(
+        'https://www.instagram.com/p/CK0tLXyAzEI/'
+      );
+      console.log('result:', response);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  }
 }
 
 (async () => {
   const scraper = new AbotScraper();
-  await scraper.reminiV2Test();
+  await scraper.facebookDownloader();
 })();
