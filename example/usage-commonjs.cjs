@@ -2,48 +2,28 @@ const fs = require('fs');
 const path = require('path');
 const { Downloader, Search, Tools } = require('../dist/index.cjs');
 
-const downloader = new Downloader();
-const search = new Search();
-const tools = new Tools();
-
-async function allTestScraping() {
-  try {
-    const ttResult = await downloader.facebook(
-      'https://www.facebook.com/share/r/1HF8RnMRVt/'
-    );
-    console.log('✅ TikTok result:', ttResult);
-
-    // const wallpaperResult = await search.wallpaper(
-    //   'https://youtu.be/QKJNaEi3T70?si=GHIu7nZ0NujiMlBi'
-    // );
-    // console.log(
-    //   '✅ Wallpaper result:',
-    //   wallpaperResult.status,
-    //   wallpaperResult.result?.length,
-    //   'items'
-    // );
-  } catch (error) {
-    console.error('❌ Error:', error.message);
+class AbotScraper {
+  constructor() {
+    this.tools = new Tools();
+    this.downloader = new Downloader();
+    this.search = new Search();
   }
-}
 
-async function singgleTest() {
-  try {
+  async uploadImage() {
     const imagePath = path.join(__dirname, '..', 'test.jpeg');
     const imageBuffer = fs.readFileSync(imagePath);
-
-    console.log('📁 Reading image:', imagePath);
-    console.log('📊 Buffer size:', imageBuffer.length, 'bytes');
-
-    const test = await tools.reminiUpscale(imageBuffer);
+    const test = await this.tools.uploadImage(imageBuffer);
     console.log('✅ result:', test);
-  } catch (error) {
-    console.error('❌ Error:', error.message);
+  }
+
+  async RemoveBgTest() {
+    const url = 'https://files.catbox.moe/rexka9.jpg';
+    const result = await this.tools.RemoveBackground(url);
+    console.log('✅ result:', result);
   }
 }
 
-if (require.main === module) {
-  singgleTest();
-}
-
-module.exports = { singgleTest };
+(async () => {
+  const scraper = new AbotScraper();
+  await scraper.RemoveBgTest();
+})();
