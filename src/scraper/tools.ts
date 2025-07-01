@@ -41,7 +41,6 @@ export default class Tools {
                     axios.get(`https://aibackgroundremover.org/api/check-status?id=${jobId}`, {
                         headers: headers
                     }).then((jobResponse: AxiosResponse) => {
-                        console.log('✅ jobResponse:', jobResponse.data);
                         if (jobResponse.data.status === "succeeded") {
                             resolve({
                                 creator: global.creator,
@@ -79,7 +78,37 @@ export default class Tools {
         })
     }
 
-    reminiUpscale = (buffer: Buffer) => {
+    reminiV2 = (buffer: Buffer) => {
+        return new Promise((resolve, reject) => {
+            const form = new FormData();
+            form.append('image', buffer, 'blob');
+            form.append('scale', 2);
+            axios.post('https://api2.pixelcut.app/image/upscale/v1', form, {
+                headers: {
+                    ...form.getHeaders(),
+                    'Accept': 'application/json',
+                    Referer: 'https://www.pixelcut.ai/',
+                    Origin: 'https://www.pixelcut.ai',
+                }
+            }).then((Response: AxiosResponse) => {
+                if (Response.data.result_url) {
+                    resolve({
+                        creator: global.creator,
+                        status: true,
+                        result: Response.data.result_url
+                    })
+                }
+            }).catch((error) => {
+                reject({
+                    creator: global.creator,
+                    status: false,
+                    error: error.message,
+                });
+            })
+        })
+    }
+
+    reminiV1 = (buffer: Buffer) => {
         return new Promise((resolve, reject) => {
             const form = new FormData();
             form.append('type', 'Enhancer');
@@ -92,6 +121,7 @@ export default class Tools {
                     'product-code': '067003',
                     'product-serial': productSerial,
                     'Referer': 'https://remaker.ai/',
+                    "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0'
                 }
             }).then((createJobResponse: AxiosResponse) => {
                 if (createJobResponse.data.code !== 100000) {
