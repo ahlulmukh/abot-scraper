@@ -9,6 +9,8 @@ class AbotScraper {
     this.search = new Search();
   }
 
+  // Tools Function
+
   async uploadImage() {
     const imagePath = path.join(__dirname, '..', 'test.jpeg');
     const imageBuffer = fs.readFileSync(imagePath);
