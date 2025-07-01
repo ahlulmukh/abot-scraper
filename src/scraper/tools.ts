@@ -8,11 +8,15 @@ export default class Tools {
         return new Promise((resolve, reject) => {
             const form = new FormData();
             form.append('type', 'Enhancer');
-            form.append('original_image_file', buffer, 'image.jpg');
+            form.append('original_image_file', buffer, 'blob');
 
             axios.post('https://api.remaker.ai/api/pai/v4/ai-enhance/create-job-new', form, {
                 headers: {
                     ...form.getHeaders(),
+                    'authorization': '',
+                    'product-code': '067003',
+                    'product-serial': '24d7e0c0b939f686aaa76f532c3efcd4',
+                    'Referer': 'https://remaker.ai/',
                 }
             }).then((response: AxiosResponse) => {
                 resolve({
