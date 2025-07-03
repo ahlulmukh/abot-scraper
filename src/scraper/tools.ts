@@ -24,45 +24,48 @@ export default class Tools {
                     reject({
                         creator: global.creator,
                         status: false,
-                        error: `Job creation failed: ${createJobResponse.data.message.en}`,
+                        error: `Job creation failed: ${createJobResponse.data.message?.en || createJobResponse.data.message?.id || 'Unknown error'}`,
                     });
                     return;
                 }
                 const jobId = createJobResponse.data.result.job_id;
-                const checkJobStatus = () => {
-                    axios.get(`https://api.ezremove.ai/api/ez-remove/background-remove/get-job/${jobId}`, {
-                        headers: {
-                            'authorization': '',
-                            'product-serial': productSerial,
-                            'Referer': 'https://ezremove.ai/',
-                            'Origin': 'https://ezremove.ai',
-                        }
-                    }).then((jobResponse: AxiosResponse) => {
-                        if (jobResponse.data.code === 100000) {
+
+                const checkJobStatus = async () => {
+                    try {
+                        const jobResponse = await axios.get(`https://api.ezremove.ai/api/ez-remove/background-remove/get-job/${jobId}`, {
+                            headers: {
+                                'authorization': '',
+                                'product-serial': productSerial,
+                                'Referer': 'https://ezremove.ai/',
+                                'Origin': 'https://ezremove.ai',
+                            }
+                        });
+                        const { code, result, message } = jobResponse.data;
+                        if (code === 100000 && result && result.output) {
                             resolve({
                                 creator: global.creator,
                                 status: true,
                                 result: {
                                     job_id: jobId,
-                                    image_url: jobResponse.data.result.output[0]
+                                    image_url: result.output[0]
                                 }
                             });
-                        } else if (jobResponse.data.code === 300001) {
+                        } else if (code === 300001) {
                             setTimeout(checkJobStatus, 3000);
                         } else {
                             reject({
                                 creator: global.creator,
                                 status: false,
-                                error: `Job failed: ${jobResponse.data.message.en}`,
+                                error: `Job failed: ${message?.en || message?.id || 'Unknown error'} (Code: ${code})`,
                             });
                         }
-                    }).catch((error) => {
+                    } catch (error: unknown) {
                         reject({
                             creator: global.creator,
                             status: false,
-                            error: error.message,
+                            error: `Status check failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
                         });
-                    });
+                    }
                 };
 
                 checkJobStatus();
