@@ -42,8 +42,9 @@ class AbotScraper {
 
   async RemoveBgTest() {
     try {
-      const url = 'https://files.catbox.moe/rexka9.jpg';
-      const result = await this.tools.removeBackground(url);
+      const imagePath = path.join(__dirname, '..', 'test.jpeg');
+      const imageBuffer = fs.readFileSync(imagePath);
+      const result = await this.tools.removeBackground(imageBuffer);
       console.log('✅ result:', result);
     } catch (error) {
       console.log('❌ error:', error);
@@ -168,5 +169,5 @@ class AbotScraper {
 
 (async () => {
   const scraper = new AbotScraper();
-  await scraper.wikimediaTest();
+  await scraper.RemoveBgTest();
 })();
