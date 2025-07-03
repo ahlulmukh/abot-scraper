@@ -82,9 +82,8 @@ async function example() {
     console.log('YouTube search results:', ytResults);
 
     // Remove background from image
-    const bgRemoved = await tools.removeBackground(
-      'https://example.com/photo.jpg'
-    );
+    const imageBuffer = fs.readFileSync('path/to/image.jpg');
+    const bgRemoved = await tools.removeBackground(imageBuffer);
     console.log('Background removed:', bgRemoved);
   } catch (error) {
     console.error('Error:', error.message);
@@ -250,7 +249,7 @@ The `Tools` class provides utility methods for image processing and manipulation
 
 #### Available Methods
 
-- `removeBackground(imageUrl)` - Remove background from an image using AI
+- `removeBackground(buffer)` - Remove background from an image using AI
 - `reminiV1(buffer)` - Enhance image quality using Remini V1 API
 - `reminiV2(buffer)` - Enhance image quality using Remini V2 API
 - `uploadImage(buffer)` - Upload image and get a shareable URL
@@ -264,7 +263,8 @@ const fs = require('fs');
 const tools = new Tools();
 
 // Remove background from image
-const bgRemoved = await tools.removeBackground('https://example.com/image.jpg');
+const imageBuffer = fs.readFileSync('path/to/image.jpg');
+const bgRemoved = await tools.removeBackground(imageBuffer);
 console.log(bgRemoved);
 
 // Enhance image quality
